@@ -1,0 +1,315 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: radial-gradient(circle at top, #0b1220, #05070f);
+  color: #e5e7eb;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  overflow: hidden;
+}
+
+/* ================= APP LAYOUT ================= */
+
+.app {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  height: 100vh;
+}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar {
+  background: #0b1220;
+  border-right: 1px solid #1f2937;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sidebar h2 {
+  color: #22d3ee;
+  letter-spacing: 2px;
+  font-size: 16px;
+}
+
+.sidebar button {
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  background: #ef4444;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.sidebar button:hover {
+  background: #dc2626;
+}
+
+/* ================= MAIN ================= */
+
+.main {
+  padding: 18px;
+  overflow-y: auto;
+  display: grid;
+  gap: 14px;
+}
+
+/* SOC GRID */
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  align-items: start;
+}
+
+/* ================= TITLE ================= */
+
+h1 {
+  grid-column: span 4;
+  font-size: 18px;
+  color: #f8fafc;
+  font-weight: 600;
+}
+
+/* ================= CARDS ================= */
+
+.card {
+  background: linear-gradient(180deg, #0f172a, #0b1220);
+  border: 1px solid #1f2937;
+  border-radius: 12px;
+  padding: 14px;
+  transition: 0.2s ease;
+}
+
+.card:hover {
+  border-color: #334155;
+  transform: translateY(-2px);
+}
+
+/* ================= CHART FULL WIDTH ================= */
+
+.card:has(canvas),
+.card:has(svg) {
+  grid-column: span 4;
+}
+
+/* ================= LOGS ================= */
+
+.logs {
+  height: 260px;
+  overflow-y: auto;
+  font-family: monospace;
+  font-size: 12px;
+  background: #050a14;
+  border-left: 3px solid #22c55e;
+}
+
+.logs p {
+  color: #22c55e;
+}
+
+/* ================= ATTACK FEED ================= */
+
+.attack {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  margin-bottom: 6px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 3px solid transparent;
+  transition: 0.2s;
+}
+
+/* SEVERITY STATES */
+.attack.critical {
+  border-left-color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.2);
+}
+
+.attack.high {
+  border-left-color: #f97316;
+  background: rgba(249, 115, 22, 0.08);
+}
+
+.attack.medium {
+  border-left-color: #facc15;
+  background: rgba(250, 204, 21, 0.06);
+}
+
+.attack.low {
+  border-left-color: #22c55e;
+  background: rgba(34, 197, 94, 0.05);
+}
+
+/* ================= ALERT POPUP ================= */
+
+.soc-alert {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid #ef4444;
+  color: #fecaca;
+  padding: 14px 16px;
+  border-radius: 10px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.35);
+  animation: slideIn 0.3s ease;
+  z-index: 9999;
+  width: 260px;
+  font-size: 13px;
+}
+
+/* ================= ANIMATIONS ================= */
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* ================= SCROLLBAR ================= */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1f2937;
+  border-radius: 10px;
+}
+
+/* ================= TEXT ================= */
+
+h3 {
+  font-size: 13px;
+  color: #94a3b8;
+  margin-bottom: 8px;
+}
+.risk-card {
+  grid-column: span 2;
+  background: linear-gradient(180deg, #0f172a, #0b1220);
+  border: 1px solid #1f2937;
+  border-radius: 12px;
+  padding: 16px;
+  transition: 0.3s;
+}
+
+.risk-meter {
+  width: 100%;
+  height: 12px;
+  background: #1e293b;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.risk-fill {
+  height: 100%;
+  width: 0%;
+  transition: width 0.6s ease;
+  background: linear-gradient(
+    90deg,
+    #22c55e,
+    #facc15,
+    #f97316,
+    #ef4444
+  );
+}
+
+.risk-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.risk-value {
+  font-weight: bold;
+  color: #22d3ee;
+}
+
+/* STATES */
+
+.risk-card.safe {
+  border-color: #22c55e;
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.1);
+}
+
+.risk-card.warning {
+  border-color: #facc15;
+  box-shadow: 0 0 10px rgba(250, 204, 21, 0.1);
+}
+
+.risk-card.danger {
+  border-color: #ef4444;
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.25);
+  animation: pulseRisk 1.5s infinite;
+}
+
+@keyframes pulseRisk {
+  0% { box-shadow: 0 0 0 rgba(239, 68, 68, 0); }
+  50% { box-shadow: 0 0 20px rgba(239, 68, 68, 0.4); }
+  100% { box-shadow: 0 0 0 rgba(239, 68, 68, 0); }
+}
+.soc-reset-btn {
+  padding: 12px;
+  border: 1px solid #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+  color: #fecaca;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  letter-spacing: 1px;
+  transition: 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* hover glow */
+.soc-reset-btn:hover {
+  background: rgba(239, 68, 68, 0.25);
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+  transform: translateY(-2px);
+}
+
+/* active press effect */
+.soc-reset-btn:active {
+  transform: scale(0.97);
+}
+
+/* flashing warning edge */
+.soc-reset-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.15),
+    transparent
+  );
+  animation: scan 2.5s infinite;
+}
+
+@keyframes scan {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
