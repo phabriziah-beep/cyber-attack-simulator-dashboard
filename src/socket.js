@@ -1,9 +1,13 @@
 import { io } from "socket.io-client";
 
-const SOCKET_URL = "http://localhost:5000";
+// Use deployed backend in production, localhost in development
+const SOCKET_URL =
+  import.meta.env.MODE === "development"
+    ? "http://localhost:5000"
+    : "https://YOUR-BACKEND-URL.onrender.com";
 
 const socket = io(SOCKET_URL, {
-  transports: ["websocket"], // more stable than polling
+  transports: ["websocket"],
   reconnection: true,
   reconnectionAttempts: Infinity,
   timeout: 10000

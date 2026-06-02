@@ -4,13 +4,17 @@ const { Server } = require("socket.io");
 const cors = require("cors");
 
 const app = express();
-app.use(cors());
+
+app.use(cors({
+  origin: "*", // allow frontend (we can tighten later)
+  methods: ["GET", "POST"]
+}));
 
 const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173",   // ← Better than "*" for Vite
+    origin: "*",
     methods: ["GET", "POST"]
   }
 });
@@ -22,7 +26,7 @@ function generateAttack() {
   return {
     type: attackTypes[Math.floor(Math.random() * attackTypes.length)],
     severity: ["LOW", "MEDIUM", "HIGH", "CRITICAL"][Math.floor(Math.random() * 4)],
-    time: new Date().toLocaleTimeString()
+    time: new Date().toISOString()
   };
 }
 
@@ -39,7 +43,9 @@ io.on("connection", (socket) => {
   });
 });
 
-const PORT = 5000;
+// IMPORTANT: Render PORT FIX
+const PORT = process.env.PORT || 5000;
+
 server.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
